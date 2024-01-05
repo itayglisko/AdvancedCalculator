@@ -1,3 +1,4 @@
+import math
 from math import pow
 
 
@@ -29,3 +30,10 @@ def div(num1: float, num2: float) -> float:
         print("this function needs to get an integer or a float type")
     except ArithmeticError as e:
         print(e)
+
+
+def pow(num1: float, num2: float) -> float:
+    try:
+        return math.pow(num1, num2)
+    except (ValueError, TypeError) as err:
+        print("this function needs to get an integer or a float type")
