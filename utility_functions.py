@@ -1,6 +1,10 @@
+#this methos is not finished
 def isValid(lst: list[str]) -> bool:
     if alpha(lst):
         return False
+    elif not Operator(lst):
+        return False
+    return True
 
 
 def alpha(lst: list[str]) -> bool:
@@ -11,19 +15,23 @@ def alpha(lst: list[str]) -> bool:
     """
     for character in lst:
         if character.isalpha():
-            return False
-    return True
+            return True
+    return False
 
 
 
 def Operator(lst: list[str]) -> bool:
     """
-    a function that checks if there is illegal operator in list
+    a function that checks if all the operators in the list r legal
     :param lst: a list full of the input from the user
     :return: true or false
     """
     for charachter in lst:
-        if not ValidKey(charachter):
+        if charachter.isdigit():
+            continue
+        elif charachter == '(' or charachter == ')':
+            continue
+        elif not ValidKey(charachter):
             return False
     return True
 
