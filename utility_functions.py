@@ -1,10 +1,18 @@
 # this method is not finished
 def isValid(lst: list[str]) -> bool:
+    """
+    check if the input is correct
+    :param lst: a list with the input
+    :return: true or false
+    """
     if alpha(lst):
+        print("u cant put alphabetic symbol in a math equation")
         return False
     elif not Operator(lst):
+        print("sorry there is an operator that is illegal")
         return False
     elif not brackets(lst):
+        print("sorry u r using brackets incorrectly")
         return False
     return True
 
