@@ -3,37 +3,34 @@ from math import pow
 
 
 class My_math(object):
-    def __init__(self, num: int):
-        self.num = num
-
-    def __add__(self: 'My_math', other: 'My_math') -> float:
+    def add(num1: float, num2: float) -> float:
         try:
-            return float(self.num + other.num)
+            return float(num1 + num2)
         except (ValueError, TypeError) as err:
             print("this function needs to get an integer or a float type")
 
-    def __sub__(self: 'My_math', other: 'My_math') -> float:
+    def sub(num1: float, num2: float) -> float:
         try:
-            return float(self.num - other.num)
+            return float(num1 - num2)
         except (ValueError, TypeError) as err:
             print("this function needs to get an integer or a float type")
 
-    def __mul__(self: 'My_math', other: 'My_math') -> float:
+    def mul(num1: float, num2: float) -> float:
         try:
-            return float(self.num * other.num)
+            return float(num1 * num2)
         except (ValueError, TypeError) as err:
             print("this functions needs to get an integer or a float type")
 
-    def __truediv__(self: 'My_math', other: 'My_math') -> float:
+    def div(num1: float, num2: float) -> float:
         try:
-            return float(self.num / other.num)
+            return float(num1 / num2)
         except (ValueError, TypeError) as err:
             print("this function needs to get an integer or a float type")
         except ArithmeticError as e:
             print(e)
 
-    def __pow__(self: 'My_math', other: 'My_math') -> float:
+    def pow(num1: float, num2: float) -> float:
         try:
-            return math.pow(self.num, other.num)
+            return math.pow(num1, num2)
         except (ValueError, TypeError) as err:
             print("this function needs to get an integer or a float type")

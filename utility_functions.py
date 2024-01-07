@@ -83,3 +83,16 @@ def Cast(lst: list[str]) -> list:
     :param lst: list full of the input's user
     :return: a list
     """
+    newlst = []
+    str1 = ""
+    for character in lst:
+        if character.isdigit() or character == '.':
+            str1 += character
+        else:
+            if str1 != '':
+                newlst.append(float(str1))
+            str1 = ""
+            newlst.append(character)
+    if str1 != "":
+        newlst.append(float(str1))
+    return newlst
