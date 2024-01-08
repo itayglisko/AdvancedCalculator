@@ -40,3 +40,10 @@ class Mymath:
     @staticmethod
     def reminder(num1: float, num2: float) -> float:
         return num1 % num2
+
+    @staticmethod
+    def tilda(num: float) -> float:
+        return -num
+
+
+
