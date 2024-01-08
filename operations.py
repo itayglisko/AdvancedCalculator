@@ -29,3 +29,7 @@ class Mymath:
     @staticmethod
     def avg(num1: float, num2: float) -> float:
         return (num1 + num2) / 2
+
+    @staticmethod
+    def max(num1: float, num2: float) -> float:
+        return num1 if num1 > num2 else num2
