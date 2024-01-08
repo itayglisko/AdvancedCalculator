@@ -85,14 +85,20 @@ def Cast(lst: list[str]) -> list:
     """
     newlst = []
     str1 = ""
-    for character in lst:
+    for index, character in enumerate(lst):
+        if character == '-':
+            if index == 0:
+                str1 += character
+            elif validkey(lst[index-1]) and lst[index-1] != '!':
+                str1 += character
         if character.isdigit() or character == '.':
             str1 += character
         else:
-            if str1 != '':
+            if str1 != '' and str1 != '-':
                 newlst.append(float(str1))
-            str1 = ""
-            newlst.append(character)
+            if str1 != '-':
+                str1 = ""
+                newlst.append(character)
     if str1 != "":
         newlst.append(float(str1))
     return newlst
