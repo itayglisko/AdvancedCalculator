@@ -2,35 +2,30 @@ import math
 from math import pow
 
 
-class My_math(object):
+class Mymath:
+    @staticmethod
     def add(num1: float, num2: float) -> float:
-        try:
-            return float(num1 + num2)
-        except (ValueError, TypeError) as err:
-            print("this function needs to get an integer or a float type")
+        return float(num1 + num2)
 
+    @staticmethod
     def sub(num1: float, num2: float) -> float:
-        try:
-            return float(num1 - num2)
-        except (ValueError, TypeError) as err:
-            print("this function needs to get an integer or a float type")
+        return float(num1 - num2)
 
+    @staticmethod
     def mul(num1: float, num2: float) -> float:
-        try:
-            return float(num1 * num2)
-        except (ValueError, TypeError) as err:
-            print("this functions needs to get an integer or a float type")
+        return float(num1 * num2)
 
+    @staticmethod
     def div(num1: float, num2: float) -> float:
         try:
             return float(num1 / num2)
-        except (ValueError, TypeError) as err:
-            print("this function needs to get an integer or a float type")
         except ArithmeticError as e:
             print(e)
 
+    @staticmethod
     def pow(num1: float, num2: float) -> float:
-        try:
-            return math.pow(num1, num2)
-        except (ValueError, TypeError) as err:
-            print("this function needs to get an integer or a float type")
+        return math.pow(num1, num2)
+
+    @staticmethod
+    def avg(num1: float, num2: float) -> float:
+        return (num1 + num2) / 2
