@@ -87,9 +87,7 @@ def Cast(lst: list[str]) -> list:
     str1 = ""
     for index, character in enumerate(lst):
         if character == '-':
-            if index == 0:
-                str1 += character
-            elif validkey(lst[index-1]) and lst[index-1] != '!':
+            if index == 0 or validkey(lst[index-1]) and lst[index-1] != '!':
                 str1 += character
         if character.isdigit() or character == '.':
             str1 += character
