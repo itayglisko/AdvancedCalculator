@@ -45,5 +45,11 @@ class Mymath:
     def tilda(num: float) -> float:
         return -num
 
-
+    @staticmethod
+    def factorial(num: float) -> float:
+        if num < 0:
+            raise ValueError("Factorial is not defined for negative numbers.")
+        elif num == 0:
+            return 1
+        return Mymath.factorial(num-1) * num
 
