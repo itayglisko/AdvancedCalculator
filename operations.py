@@ -1,4 +1,3 @@
-import math
 from math import pow
 
 
@@ -24,7 +23,7 @@ class Mymath:
 
     @staticmethod
     def pow(num1: float, num2: float) -> float:
-        return math.pow(num1, num2)
+        return pow(num1, num2)
 
     @staticmethod
     def avg(num1: float, num2: float) -> float:
@@ -33,9 +32,10 @@ class Mymath:
     @staticmethod
     def max(num1: float, num2: float) -> float:
         return num1 if num1 > num2 else num2
+
     @staticmethod
     def min(num1: float, num2: float) -> float:
-        return num1 if num1<num2 else num2
+        return num1 if num1 < num2 else num2
 
     @staticmethod
     def reminder(num1: float, num2: float) -> float:
@@ -51,5 +51,27 @@ class Mymath:
             raise ValueError("Factorial is not defined for negative numbers.")
         elif num == 0:
             return 1
-        return Mymath.factorial(num-1) * num
+        return Mymath.factorial(num - 1) * num
 
+    @staticmethod
+    def hashtag(num: float) -> float:
+        sum = 0
+        flag = True
+        wasminus = False
+        count = 0
+        if num < 0:
+            wasminus = True
+            num = -num
+        num = str(num)
+        while flag:
+            for digit in num:
+                if digit.isdigit():
+                    sum += int(digit)
+            if sum >= 10:
+                num = str(sum)
+                sum = 0
+            else:
+                flag = False
+        if wasminus:
+            return -sum
+        return sum
