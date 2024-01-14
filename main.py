@@ -1,5 +1,7 @@
-from operations import *
-from utility_functions import isValid, Cast
+
+from operations import Mymath
+from utility_functions import is_valid, cast, add_brackets
+from calculate import calculate
 
 if __name__ == '__main__':
     lst = []
@@ -12,6 +14,12 @@ if __name__ == '__main__':
             if character == ' ' or character == '\t':
                 continue
             lst.append(character)
-        if isValid(lst):
-            lst = Cast(lst)
+        if is_valid(lst):
+            lst = cast(lst)
+            if lst[0] != '(':
+                lst = add_brackets(lst)
             print(lst)
+            try:
+                print(calculate(lst))
+            except (SyntaxError, OverflowError) as e:
+                print(e)
