@@ -1,12 +1,15 @@
 # this method is not finished
 def is_valid(lst: list[str]) -> bool:
     """
-    check if the input is correct
+    check if the input is correct while using the func cast for several cases.
     :param lst: a list with the input
     :return: true or false
     """
     if alpha(lst):
         print("u cant put alphabetic symbol in a math equation")
+        return False
+    elif len(lst) == 0:
+        print("sorry this equation is empty")
         return False
     elif not operator(lst):
         print("sorry there is an operator that is illegal")
@@ -15,13 +18,16 @@ def is_valid(lst: list[str]) -> bool:
         print("sorry u r using brackets incorrectly")
         return False
     elif not double_dot(lst):
-        print("A number can not contain two dots")
+        print("A number can not contain more than 1 dot")
         return False
     elif not valid_tilda(cast(lst)):
         print("illegal use for ~ operator")
         return False
     elif not valid_right_opt(cast(lst)):
         print("right operator need to be next to another right opt or a number")
+        return False
+    elif not valid_binary_opt(cast(lst)):
+        print("the placement of the binary opt is incorrect")
         return False
     return True
 
@@ -72,30 +78,22 @@ def brackets(lst: list[str]) -> bool:
     and remove empty brackets from the list
     :param lst:  full of the input from the user
     :return: true or false
+    :raise: Syntax error if there is no operand between brackets
     """
     openbracket = 0
     closebracket = 0
     idx = 0
-    length = len(lst) - 1
     for index, character in enumerate(lst):
         if character == '(':
-            if index != 0 and not regular_opt(lst[index - 1]):
-                print("before ( there need to be an operator")
-                return False
             openbracket += 1
             idx = index
         elif character == ')':
-            if index == length - 1 and not right_unary(lst[index + 1]) and index == length - 1 and not lst[
-                                                                                                           index + 1] == ')':
-                print("u had to put right unary operator after ) at this position")
-                return False
-            if index < length and not validkey(lst[index + 1]) and not lst[index + 1] == ')':
-                print("after ) u need to put an operator")
-                return False
             closebracket += 1
-            if idx + 1 == index:
+            # checks if there is an empty brackets
+            if idx + 1 == index or openbracket < closebracket:
                 return False
-                # del lst[idx:index + 1]
+            if index < len(lst) - 1 and lst[index + 1] == '(':
+                raise SyntaxError("There is lack of an operand between the brackets")
     if openbracket != closebracket:
         return False
     return True
@@ -145,7 +143,7 @@ def regular_opt(ch: str) -> bool:
 def right_unary(ch: str) -> bool:
     """
     check if ch is a right unary symbol
-    :param ch: the char we are checkeing
+    :param ch: the char we are checking
     :return: true or false
     """
     match ch:
@@ -154,44 +152,65 @@ def right_unary(ch: str) -> bool:
     return False
 
 
+def left_unary(ch: str) -> bool:
+    match ch:
+        case '~':
+            return True
+    return False
+
+
 def is_number(x: any) -> bool:
     """
     checks if the parameter x is a number or not
-    :param x:
-    :return:
+    :param x: the parameter we check if it is a number
+    :return: True if the x is a number else False
     """
     try:
         float(x)
         return True
-    except ValueError as err:
+    except ValueError:
         return False
 
 
 def valid_tilda(lst: list[str, float]) -> bool:
     """
     gets a !casted! list (a list which the cast function was performed)
-    and check if there is a correct use for the operator tilda '~'
+    and check if there is a correct usage of the operator tilda '~'
     :param lst: list full of the user's input
     :return: true or false
     """
-    flag = False
-    valid = False
+    lastidx = len(lst) - 1
     for index, character in enumerate(lst):
-        match character:
-            case '~':
-                flag = True
-                try:
-                    if (index == 0 and is_number(lst[index + 1]) or regular_opt(lst[index - 1]) and
-                            is_number(lst[index + 1]) or lst[index - 1] == '(' and
-                            is_number(lst[index + 1])):
-                        valid = True
-                    else:
-                        return False
-                except IndexError as e:
-                    break
-    if not flag:
-        return True
-    return valid
+        if character == '~':
+            if index == lastidx:
+                return False
+            if index < lastidx:
+                if not (index == 0 and is_number(lst[index + 1]) or regular_opt(lst[index - 1]) and
+                        is_number(lst[index + 1]) or lst[index - 1] == '(' and
+                        is_number(lst[index + 1]) or lst[index + 1] == '(' and regular_opt(lst[index - 1])):
+                    return False
+    return True
+
+
+def valid_binary_opt(lst: list) -> bool:
+    """
+    checks if the placement of the binary opt is correct
+    :param lst: list full of the user's index
+    :return: true ot false
+    """
+    lastidx = len(lst) - 1
+    for index, element in enumerate(lst):
+        if regular_opt(element):
+            if index == 0 or index == len(lst) - 1:
+                return False
+            if index < lastidx:
+                if not (lst[index + 1] == '(' or is_number(lst[index + 1]) or left_unary(
+                        lst[index + 1])):
+                    return False
+            if not (is_number(lst[index - 1]) or lst[index - 1] == '(' or lst[index - 1] == ')' or right_unary(
+                    lst[index - 1])):
+                return False
+    return True
 
 
 def valid_right_opt(lst: list[str, float]) -> bool:
@@ -200,48 +219,63 @@ def valid_right_opt(lst: list[str, float]) -> bool:
     :param lst: list full od the user's input
     :return: true or false
     """
-    flag = False
-    valid = False
-    for index, character in enumerate(lst):
-        if right_unary(character):
-            flag = True
-        if index == 0 and right_unary(character):
-            return False
-        elif right_unary(character) and is_number(lst[index - 1]) or right_unary(character) and right_unary(
-                lst[index - 1]):
-            valid = True
-        elif right_unary(character):
-            return False
-    if not flag:
-        return True
-    return valid
+    lastidx = len(lst) - 1
+    for index, element in enumerate(lst):
+        if right_unary(element):
+            if index == 0:
+                return False
+            if index < lastidx:
+                if not (regular_opt(lst[index + 1]) or right_unary(lst[index + 1]) or lst[index + 1] == ')'):
+                    return False
+            if not (is_number(lst[index - 1]) or right_unary(lst[index - 1]) or lst[index - 1] == ')'):
+                return False
+    return True
 
 
 def cast(lst: list[str]) -> list:
     """
-     gets a list that its chars are ready to be converted to numbers after using that func is_valid
+     gets a list and prepare it to be ready for the func calculate while helping check if the equation is valid.
+     this function is the most important one because while doing so it handles the minuses and several
+     validation that must be handled. for example:
+     this function delete minuses if it is 2 in a row so if the equation is: --3 it will erase the 2 minuses cause it not
+     necessary but because of it the function 'valid_tilda' can not check all the cases of tilda for example:
+     --~-3 this equation is !not! legal but because this func erases minuses the function 'valid_tilda' see the equation as:
+     ~-3 which is legal hence this func must handle this senario.
     :param lst: list full of the input's user
     :return: a list
+    :raise: SyntaxError for illegal inputs
     """
     newlst = []
     str1 = ""
     length = len(lst)
+    flag = False
     for index, character in enumerate(lst):
         if character == '-':
+            flag = True
             if index == 0:
                 newlst.append('m')
                 continue
             if validkey(lst[index - 1]) and not right_unary(lst[index - 1]) or lst[index - 1] == '(':
                 str1 += character
+        if character == '~':
+            if flag:
+                raise SyntaxError("illegal use for ~ operator")
         if character.isdigit() or character == '.':
+            flag = False
             str1 += character
         else:
             if str1 == '--':
                 str1 = ""
                 continue
+            if character == '(' and str1 == '-':
+                newlst.append('m')
+                str1 = ""
             if str1 != '' and str1 != '-':
+                if str1 == ".":
+                    raise SyntaxError("'.' can not be used as an operand")
                 newlst.append(float(str1))
-            if str1 != '-':
+            if str1 != '-' or str1 == "-" and index == length - 1:
+                flag = False
                 str1 = ""
                 newlst.append(character)
                 if character == '~' or character == '(' or character == ')':
@@ -249,5 +283,7 @@ def cast(lst: list[str]) -> list:
             if character == '~' or character == '(' or character == ')':
                 newlst.append(character)
     if str1 != "":
+        if str1 == ".":
+            raise SyntaxError("'.' can not be used as an operand")
         newlst.append(float(str1))
     return newlst
