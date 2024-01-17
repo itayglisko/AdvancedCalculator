@@ -42,7 +42,7 @@ class Mymath:
         """
         if num2 == 0:
             raise ArithmeticError("Can not divide by zero")
-        return float(num1 / num2)
+        return round(num1 / num2, 10)
 
     @staticmethod
     def pow(num1: float, num2: float) -> float:
@@ -65,7 +65,7 @@ class Mymath:
         :param num2: A parameter that is involved on the operation
         :return: the result from the operation
         """
-        return (num1 + num2) / 2
+        return round((num1 + num2) / 2)
 
     @staticmethod
     def max(num1: float, num2: float) -> float:
@@ -95,7 +95,7 @@ class Mymath:
         :param num2: A parameter that is involved on the operation
         :return: the result from the operation
         """
-        return num1 % num2
+        return round(num1 % num2)
 
     @staticmethod
     def tilda(num: float) -> float:

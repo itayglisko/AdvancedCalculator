@@ -232,6 +232,22 @@ def valid_right_opt(lst: list[str, float]) -> bool:
     return True
 
 
+def minus_handler(lst: list[str]) -> int:
+    newlst = []
+    at_the_begining = False
+    count = 0
+    for index, char in enumerate(lst):
+        if char == '-':
+            if index == 0:
+                at_the_begining = True
+            if at_the_begining:
+                count += 1
+        else:
+            if at_the_begining:
+                return count
+    return 0
+
+
 def cast(lst: list[str]) -> list:
     """
      gets a list and prepare it to be ready for the func calculate while helping check if the equation is valid.
@@ -249,18 +265,21 @@ def cast(lst: list[str]) -> list:
     str1 = ""
     length = len(lst)
     flag = False
+    num_of_minus_at_the_beggining = minus_handler(lst)
+    if num_of_minus_at_the_beggining % 2 == 1:
+        newlst.append('m')
     for index, character in enumerate(lst):
+        if index < num_of_minus_at_the_beggining:
+            continue
         if character == '-':
             flag = True
-            if index == 0:
-                newlst.append('m')
-                continue
             if validkey(lst[index - 1]) and not right_unary(lst[index - 1]) or lst[index - 1] == '(':
                 str1 += character
         if character == '~':
             if flag:
                 raise SyntaxError("illegal use for ~ operator")
         if character.isdigit() or character == '.':
+            minus_at_the_beginning = False
             flag = False
             str1 += character
         else:
