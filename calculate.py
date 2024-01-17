@@ -31,6 +31,8 @@ def calculate(lst: list[any]) -> float:
             del lst[where + opt_index + 1]
         remove_useless_bracket(lst)
         print(lst)
+    if lst[0] == -0:
+        return 0
     return lst[0]
 
 
@@ -76,7 +78,7 @@ def calc(lst: list[any], idx: int) -> float:
             result = Mymath.pow(lst[idx - 1], lst[idx + 1])
             # lst[idx - 1:idx + 2] = None
         case '%':
-            result = Mymath.sub(lst[idx - 1], lst[idx + 1])
+            result = Mymath.reminder(lst[idx - 1], lst[idx + 1])
             # lst[idx - 1:idx + 2] = None
         case '@':
             result = Mymath.avg(lst[idx - 1], lst[idx + 1])
