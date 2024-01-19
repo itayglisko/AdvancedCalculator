@@ -185,7 +185,7 @@ def valid_tilda(lst: list[str, float]) -> bool:
             if index == lastidx:
                 return False
             if index < lastidx:
-                if not (index == 0 and is_number(lst[index + 1]) or regular_opt(lst[index - 1]) and
+                if not (index == 0 and is_number(lst[index + 1]) or index == 0 and lst[index + 1] == '(' or regular_opt(lst[index - 1]) and
                         is_number(lst[index + 1]) or lst[index - 1] == '(' and
                         is_number(lst[index + 1]) or lst[index + 1] == '(' and regular_opt(lst[index - 1])):
                     return False
@@ -268,6 +268,8 @@ def cast(lst: list[str]) -> list:
     num_of_minus_at_the_beggining = minus_handler(lst)
     if num_of_minus_at_the_beggining % 2 == 1:
         newlst.append('m')
+    elif lst[num_of_minus_at_the_beggining] == '~' and num_of_minus_at_the_beggining != 0:
+        raise SyntaxError("illegal use for ~ operator")
     for index, character in enumerate(lst):
         if index < num_of_minus_at_the_beggining:
             continue
