@@ -85,6 +85,8 @@ def brackets(lst: list[str]) -> bool:
     idx = 0
     for index, character in enumerate(lst):
         if character == '(':
+            if index != 0 and not regular_opt(lst[index - 1]):
+                return False
             openbracket += 1
             idx = index
         elif character == ')':
