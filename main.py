@@ -21,7 +21,7 @@ def main():
     lst = []
     try:
         equation = input("enter a mathematical equation: ")
-    except (EOFError, KeyboardInterrupt) as err:
+    except EOFError as err:
         print(err)
     else:
         lst = remove_white_spaces(equation)
@@ -29,10 +29,9 @@ def main():
             if is_valid(lst):
                 lst = cast(lst)
                 lst = add_brackets(lst)
-                print(lst)
                 try:
                     print(calculate(lst))
-                except (SyntaxError, OverflowError, KeyboardInterrupt, RecursionError, ValueError, ArithmeticError) as e:
+                except (SyntaxError, OverflowError, RecursionError, ValueError, ArithmeticError) as e:
                     print(e)
         except SyntaxError as e:
             print(e)

@@ -32,7 +32,6 @@ def calculate(lst: list[any]) -> float:
             lst[where + opt_index] = result
             del lst[where + opt_index + 1]
         remove_useless_bracket(lst)
-        print(lst)
     if lst[0] == -0:
         return 0
     return lst[0]
