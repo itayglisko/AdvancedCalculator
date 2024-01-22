@@ -47,5 +47,4 @@ def test_calculate():
     with pytest.raises(SyntaxError):
         assert is_valid(remove_white_spaces("--~12"))
         assert is_valid(remove_white_spaces(".+45"))
-#(((~-3!!^~-3!)#/5) ^ 100)#
 
