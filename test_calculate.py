@@ -7,6 +7,9 @@ from calculate import calculate
 def test_calculate():
     """
     testing several equations to check that the calculator answer every situation
+    there are 3 types of test one of valid and legal equations.
+    second that the function "is valid" taking care of which need to return False
+    and the last one which raises exceptions.
     :return:
     """
     assert calculate(add_brackets(cast(remove_white_spaces("100@50")))) == 75
@@ -19,12 +22,14 @@ def test_calculate():
     assert calculate(add_brackets(cast(remove_white_spaces("~12^3+~-9/6.2")))) == -1726.5483870968
     assert calculate(add_brackets(cast(remove_white_spaces("~(5*2+~(3!))")))) == -4
     assert calculate(add_brackets(cast(remove_white_spaces("(-3-(-(-3)))")))) == -6
+    assert calculate(add_brackets(cast(remove_white_spaces("---(~3-(9*9^(1/2)*(-1)))")))) == -24
     assert is_valid(remove_white_spaces("")) == False
     assert is_valid(remove_white_spaces("4~@3")) == False
     assert is_valid(remove_white_spaces("10+*200")) == False
     assert is_valid(remove_white_spaces("fuiqeh434^3761890*3211")) == False
     assert calculate(add_brackets(cast(remove_white_spaces("((12 &    53) #)!")))) == 6
     assert calculate(add_brackets(cast(remove_white_spaces("4!^2+(64/8)/4*(10@5&7+2-(22#))")))) == 586
+    assert calculate(add_brackets(cast(remove_white_spaces("((((((((~-3!!^~-3!)#/5) ^ 100)#!#) + ~-(5&2$4)!#)%7 / 10 ) ^ 2 * 1000) % 3)! + ~-------((((((((~-3!!^~-3!)#/5) ^ 100)#!#) + ~-(5&2$4)!#)%7 / 10 ) ^ 2 * 1000) %  3)!")))) == 2
     assert calculate(add_brackets(cast(remove_white_spaces("((-------45/-9)^2/5%2+5)/6")))) == 5
     assert calculate(add_brackets(cast(remove_white_spaces("(6!$1000/10)^0.5/2.5")))) == 4
     assert calculate(add_brackets(cast(remove_white_spaces("12.3+5.6*4-(8.1^2)")))) == -30.909999999999997
@@ -42,4 +47,5 @@ def test_calculate():
     with pytest.raises(SyntaxError):
         assert is_valid(remove_white_spaces("--~12"))
         assert is_valid(remove_white_spaces(".+45"))
+#(((~-3!!^~-3!)#/5) ^ 100)#
 
