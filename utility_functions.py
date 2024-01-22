@@ -83,13 +83,20 @@ def brackets(lst: list[str]) -> bool:
     openbracket = 0
     closebracket = 0
     idx = 0
+    flag = False
     for index, character in enumerate(lst):
+        if flag:
+            flag = False
+            if index < len(lst) - 1 and not validkey(character):
+                raise SyntaxError("there is a lack of an operand after )")
         if character == '(':
-            if index != 0 and not regular_opt(lst[index - 1]):
-                return False
+            if index != 0:
+                if not (regular_opt(lst[index - 1]) or left_unary(lst[index - 1]) or character == '('):
+                    return False
             openbracket += 1
             idx = index
         elif character == ')':
+            flag = True
             closebracket += 1
             # checks if there is an empty brackets
             if idx + 1 == index or openbracket < closebracket:
@@ -187,9 +194,9 @@ def valid_tilda(lst: list[str, float]) -> bool:
             if index == lastidx:
                 return False
             if index < lastidx:
-                if not (index == 0 and is_number(lst[index + 1]) or index == 0 and lst[index + 1] == '(' or regular_opt(lst[index - 1]) and
+                if not (index == 0 and is_number(lst[index + 1]) or index == 0 and lst[index + 1] == '(' or index == 0  and lst[index + 1] == 'm' or regular_opt(lst[index - 1]) and
                         is_number(lst[index + 1]) or lst[index - 1] == '(' and
-                        is_number(lst[index + 1]) or lst[index + 1] == '(' and regular_opt(lst[index - 1])):
+                        is_number(lst[index + 1]) or lst[index + 1] == '(' and regular_opt(lst[index - 1]) or regular_opt(lst[index - 1]) and lst[index + 1] == 'm'):
                     return False
     return True
 
@@ -235,6 +242,11 @@ def valid_right_opt(lst: list[str, float]) -> bool:
 
 
 def minus_handler(lst: list[str]) -> int:
+    """
+    a function that counts the minuses only at the begining.
+    :param lst: a list full of the user's input
+    :return: the number of minuses at the begining
+    """
     newlst = []
     at_the_begining = False
     count = 0
@@ -249,7 +261,9 @@ def minus_handler(lst: list[str]) -> int:
                 return count
     return 0
 
-
+# i know that this function is against any of what we learned (its not readble for others, it too long and more) and it is completely my fault.
+# during the development i added more and more things to this function until it got out of controll.
+# i would have changed it buy if there was more time sorry in advance.
 def cast(lst: list[str]) -> list:
     """
      gets a list and prepare it to be ready for the func calculate while helping check if the equation is valid.

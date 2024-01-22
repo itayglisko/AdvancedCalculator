@@ -1,4 +1,4 @@
-from utility_functions import validkey, regular_opt, right_unary
+from utility_functions import validkey, regular_opt, right_unary, left_unary
 from operations import Mymath
 
 
@@ -17,6 +17,8 @@ def calculate(lst: list[any]) -> float:
         if opt_index == -1:
             remove_useless_bracket(lst)
             continue
+        if opt_index < len(bracketslst) - 1 and bracketslst[opt_index + 1] == 'm':
+            opt_index += 1
         result = calc(bracketslst, opt_index)
         where = sublist_index(lst, bracketslst)
         if regular_opt(lst[where + opt_index]):
@@ -64,40 +66,28 @@ def calc(lst: list[any], idx: int) -> float:
     match lst[idx]:
         case '+':
             result = Mymath.add(lst[idx - 1], lst[idx + 1])
-            # lst[idx - 1:idx + 2] = None
         case '-':
             result = Mymath.sub(lst[idx - 1], lst[idx + 1])
-            # lst[idx - 1:idx + 2] = None
         case '*':
             result = Mymath.mul(lst[idx - 1], lst[idx + 1])
-            # lst[idx - 1:idx + 2] = None
         case '/':
             result = Mymath.div(lst[idx - 1], lst[idx + 1])
-            # lst[idx - 1:idx + 2] = None
         case '^':
-            result = Mymath.pow(lst[idx - 1], lst[idx + 1])
-            # lst[idx - 1:idx + 2] = None
+            result = Mymath.pow2(lst[idx - 1], lst[idx + 1])
         case '%':
             result = Mymath.reminder(lst[idx - 1], lst[idx + 1])
-            # lst[idx - 1:idx + 2] = None
         case '@':
             result = Mymath.avg(lst[idx - 1], lst[idx + 1])
-            # lst[idx - 1:idx + 2] = None
         case '$':
             result = Mymath.max(lst[idx - 1], lst[idx + 1])
-            # lst[idx - 1:idx + 2] = None
         case '&':
             result = Mymath.min(lst[idx - 1], lst[idx + 1])
-            # lst[idx - 1:idx + 2] = None
         case '~':
             result = Mymath.tilda(lst[idx + 1])
-            # lst[idx:idx + 2] = None
         case '!':
             result = Mymath.factorial(lst[idx - 1])
-            # lst[idx - 1:idx + 1] = None
         case '#':
             result = Mymath.hashtag(lst[idx - 1])
-            # lst[idx - 1:idx + 1] = None
         case 'm':
             result = -lst[idx + 1]
     return result

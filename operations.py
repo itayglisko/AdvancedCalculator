@@ -45,7 +45,7 @@ class Mymath:
         return round(num1 / num2, 10)
 
     @staticmethod
-    def pow(num1: float, num2: float) -> float:
+    def pow2(num1: float, num2: float) -> float:
         """
         calculate num1 to the power of num2 (num1^num2)
         :param num1: A parameter that is involved on the operation
@@ -132,10 +132,12 @@ class Mymath:
         sum = 0
         if num < 0:
             raise ValueError("can not calculate hashtag on a negative number")
-        else:
-            num = -num
+        # else:
+        #     num = -num
         num = str(num)
         for digit in num:
+            if digit == 'e':
+                return sum
             if digit.isdigit():
                 sum += int(digit)
         return sum
