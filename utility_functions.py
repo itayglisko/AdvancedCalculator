@@ -194,9 +194,11 @@ def valid_tilda(lst: list[str, float]) -> bool:
             if index == lastidx:
                 return False
             if index < lastidx:
-                if not (index == 0 and is_number(lst[index + 1]) or index == 0 and lst[index + 1] == '(' or index == 0  and lst[index + 1] == 'm' or regular_opt(lst[index - 1]) and
+                if not (index == 0 and is_number(lst[index + 1]) or index == 0 and lst[
+                    index + 1] == '(' or index == 0 and lst[index + 1] == 'm' or regular_opt(lst[index - 1]) and
                         is_number(lst[index + 1]) or lst[index - 1] == '(' and
-                        is_number(lst[index + 1]) or lst[index + 1] == '(' and regular_opt(lst[index - 1]) or regular_opt(lst[index - 1]) and lst[index + 1] == 'm'):
+                        is_number(lst[index + 1]) or lst[index + 1] == '(' and regular_opt(
+                            lst[index - 1]) or regular_opt(lst[index - 1]) and lst[index + 1] == 'm'):
                     return False
     return True
 
@@ -247,7 +249,6 @@ def minus_handler(lst: list[str]) -> int:
     :param lst: a list full of the user's input
     :return: the number of minuses at the begining
     """
-    newlst = []
     at_the_begining = False
     count = 0
     for index, char in enumerate(lst):
@@ -261,9 +262,10 @@ def minus_handler(lst: list[str]) -> int:
                 return count
     return 0
 
-# i know that this function is against any of what we learned (its not readble for others, it too long and more) and it is completely my fault.
-# during the development i added more and more things to this function until it got out of controll.
-# i would have changed it buy if there was more time sorry in advance.
+
+# I know that this function is against any of what we learned (it's not readable for others, it is too long and more) and it is completely my fault.
+# during the development I added more and more things to this function until it got out of control.
+# I would have changed it buy if there was more time sorry in advance.
 def cast(lst: list[str]) -> list:
     """
      gets a list and prepare it to be ready for the func calculate while helping check if the equation is valid.
@@ -297,7 +299,6 @@ def cast(lst: list[str]) -> list:
             if flag:
                 raise SyntaxError("illegal use for ~ operator")
         if character.isdigit() or character == '.':
-            minus_at_the_beginning = False
             flag = False
             str1 += character
         else:
